@@ -3,7 +3,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.prefs.Preferences; // NEW: For high score
+import java.util.prefs.Preferences; //For high score
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -14,7 +14,6 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
     private static final int GROUND_Y = BOARD_HEIGHT - 40; // Y position of the track
 
     // --- GAME STATE ---
-    // NEW: Game state management
     private enum GameState {
         READY, PLAYING, GAME_OVER
     }
@@ -38,15 +37,14 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
     // --- GAME LOGIC ---
     private double gameSpeed = 8.0;
     private int score = 0;
-    private int highScore; // NEW
-    private Preferences prefs; // NEW
+    private int highScore; 
+    private Preferences prefs;
 
     // --- TIMERS ---
     private Timer gameLoop;
     private Timer placeObstaclesTimer;
 
     // --- INNER CLASS: Animation ---
-    // NEW: Handles sprite animations
     class Animation {
         BufferedImage[] frames;
         private int frameIndex = 0;
@@ -197,7 +195,6 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
     }
     
     // --- INNER CLASS: Ground ---
-    // NEW: Manages the scrolling ground
     class Ground {
         int x1 = 0, x2;
         int width;
@@ -247,7 +244,6 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
         setFocusable(true);
         addKeyListener(this);
         
-        // NEW: Add mouse listener for the restart button
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -259,7 +255,6 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
 
         loadAssets();
         
-        // NEW: Load high score
         prefs = Preferences.userNodeForPackage(ChromeDinosaur.class);
         highScore = prefs.getInt("highscore", 0);
 
@@ -295,7 +290,7 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
             dinosaurDuck2Img = ImageIO.read(getClass().getResource("./img/dino-duck2.png"));
 
             cactus1Img = ImageIO.read(getClass().getResource("./img/cactus1.png"));
-            cactus2Img = ImageIO.read(getClass().getResource("./img/big-cactus1.png")); // Using big cacti for variety
+            cactus2Img = ImageIO.read(getClass().getResource("./img/big-cactus1.png")); 
             cactus3Img = ImageIO.read(getClass().getResource("./img/big-cactus3.png"));
 
             bird1Img = ImageIO.read(getClass().getResource("./img/bird1.png"));
@@ -396,7 +391,6 @@ public class ChromeDinosaur extends JPanel implements ActionListener, KeyListene
                 dinosaur.y = dinosaur.startY; // Put dino back on ground when dead
                 placeObstaclesTimer.stop();
                 
-                // NEW: Check and save high score
                 if (score > highScore) {
                     highScore = score;
                     prefs.putInt("highscore", highScore);
